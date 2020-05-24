@@ -43,9 +43,6 @@ private:
 		*this=A;
 	}			
 public:
-	Punto getPunto(){
-		return *a;
-	}
 	void MostrarArreglo(){
 		for(int i=0;i<size;i++){
 			a[i].MostrarPunto();
@@ -96,10 +93,10 @@ public:
 		}
 	}
 	
-	/*~ArreglodePuntos(){
-		delete[] a; 
+	~ArreglodePuntos(){
+		cout<<"Destructor Invoked";
 	}
-	*/ 
+	 
 	
 };
 int main(){
