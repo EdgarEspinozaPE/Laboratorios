@@ -38,7 +38,7 @@ public:
     }
 };
 
-int main()
+/*int main()
 {
     clock_t start = clock();
     for (auto i = 0; i < 10000; i++)
@@ -57,5 +57,23 @@ int main()
         delete copia;
     }
     std::cout << "move: " << static_cast<double>(clock() - start) / CLOCKS_PER_SEC << std::endl;
+}*/
+struct V
+{
+    V& operator=(V&& other) {
+        // this may be called once or twice
+        // if called twice, 'other' is the just-moved-from V subobject
+        return *this;
+    }
+};
+struct A : virtual V { }; // operator= calls V::operator=
+struct B : virtual V { }; // operator= calls V::operator=
+struct C : B, A { };      // operator= calls B::operator=, then A::operator=
+                          // but they may only call V::operator= once
+
+int main()
+{
+    C c1, c2;
+    c2 = std::move(c1);
 }
 
